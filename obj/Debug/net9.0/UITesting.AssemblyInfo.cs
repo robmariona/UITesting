@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UITesting")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3111f028399945f18e48a914c03b74916fd4cf36")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79ccc585665bc2c070a61d4757720d171838239f")]
 [assembly: System.Reflection.AssemblyProductAttribute("UITesting")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UITesting")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
