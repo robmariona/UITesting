@@ -47,12 +47,12 @@ namespace UITesting.Pages
         
         }
         
-        public void LogoutUser()
+       /* public void LogoutUser()
         {
             Driver.WaitAndClick(ClientLogOutLocator);
         }
         
-
+        */
 
     }
 }

@@ -103,3 +103,4 @@ C:\Users\rober\OneDrive\Documents\UEES\Ciclo 01-25\POO\Unidad 2\myapp2\UITesting
 C:\Users\rober\OneDrive\Documents\UEES\Ciclo 01-25\POO\Unidad 2\myapp2\UITesting\obj\Debug\net9.0\UITesting.pdb
 C:\Users\rober\OneDrive\Documents\UEES\Ciclo 01-25\POO\Unidad 2\myapp2\UITesting\obj\Debug\net9.0\UITesting.genruntimeconfig.cache
 C:\Users\rober\OneDrive\Documents\UEES\Ciclo 01-25\POO\Unidad 2\myapp2\UITesting\obj\Debug\net9.0\ref\UITesting.dll
+C:\Users\rober\OneDrive\Documents\UEES\Ciclo 01-25\POO\Unidad 2\myapp2\UITesting\obj\Debug\net9.0\UITesting.sourcelink.json

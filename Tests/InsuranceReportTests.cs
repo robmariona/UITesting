@@ -36,7 +36,7 @@ namespace UITesting.Tests
 
             Assert.Contains("$", _ReportPage.GetTotalRevenue());
 
-            _loginPage.LogoutUser();
+           // _loginPage.LogoutUser();
         }
 
 

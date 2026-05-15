@@ -47,7 +47,7 @@ namespace UITesting.Tests
 
             Assert.True(isVisible, $"Product '{productData.Name}' was not found in the grid.");
 
-            _loginPage.LogoutUser();
+           // _loginPage.LogoutUser();
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace UITesting.Tests
 
             Assert.True(isVisible, $"Product '{productDataEdited.Name}' was not found in the grid.");
 
-            _loginPage.LogoutUser();
+            //_loginPage.LogoutUser();
         }
     }
 }
