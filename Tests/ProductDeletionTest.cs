@@ -9,7 +9,7 @@ using UITesting.Pages;
 
 namespace UITesting.Tests
 {
-    //[Collection("Sequential Tests")]
+    [Collection("Sequential Tests")]
     public class ProductDeletionTest : TestBase
     {
 

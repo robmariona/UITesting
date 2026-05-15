@@ -17,4 +17,4 @@ services:
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     deploy:
-      replicas: 3 # This creates 3 separate browser containers
+      replicas: 1 # This creates 3 separate browser containers

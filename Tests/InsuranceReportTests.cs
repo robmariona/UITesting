@@ -8,7 +8,7 @@ using UITesting.Extensions;
 
 namespace UITesting.Tests
 {
-    //[Collection("Sequential Tests")]
+    [Collection("Sequential Tests")]
 
     public class InsuranceReportTests : TestBase
     {

@@ -7,7 +7,7 @@ using Xunit; // Ensure you have Xunit for [Fact]
 
 namespace UITesting.Tests
 {
-    //[Collection("Sequential Tests")]
+    [Collection("Sequential Tests")]
     public class ProductTest : TestBase
     {
         private readonly DashboardPage _dashboard;
