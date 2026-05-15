@@ -7,7 +7,7 @@ using Xunit; // Ensure you have Xunit for [Fact]
 
 namespace UITesting.Tests
 {
-    [Collection("Sequential Tests")]
+    //[Collection("Sequential Tests")]
     public class ProductTest : TestBase
     {
         private readonly DashboardPage _dashboard;
@@ -25,9 +25,10 @@ namespace UITesting.Tests
         public void ProductIsVisible_AfterCreation()
         {
             // 1. Arrange - Group your data into the Model
+            string uniqueName = "Technics 1200 " + Guid.NewGuid().ToString().Substring(0, 5);
             var productData = new ProductModel
             {
-                Name = "Technics 1200 MK7", // Keep names consistent!
+                Name = uniqueName, // Keep names consistent!
                 Description = "High-end Turntable",
                 Price = 1200.00m,
                 Category = "General"

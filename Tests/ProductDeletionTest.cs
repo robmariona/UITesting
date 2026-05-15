@@ -26,10 +26,12 @@ namespace UITesting.Tests
         [Fact]
         public void DeleteDuplicates()
         {
-            
+
+            string uniqueName = "Technics 1200 " + Guid.NewGuid().ToString().Substring(0, 5);
+
             // Arrange: Create a product that we know already exists
             var duplicateData = new ProductModel {
-                Name = "Technics 1200 MK7", // Keep names consistent!
+                Name = uniqueName, // Keep names consistent!
                 Description = "High-end Turntable",
                 Price = 1200.00m,
                 Category = "General"
