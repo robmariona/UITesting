@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
@@ -12,29 +13,29 @@ public static class DriverFactory
 
         switch (browser.ToLower())
         {
-
             case "firefox":
                 var firefoxOptions = new FirefoxOptions();
                 if (headless)
                 {
-                    firefoxOptions.AddArgument("--headless=new");
-
+                    firefoxOptions.AddArgument("-headless"); // Note: Firefox uses -headless
                 }
-                firefoxOptions.AddArgument("--start-maximized");
+                firefoxOptions.AddArgument("--width=1920");
+                firefoxOptions.AddArgument("--height=1080");
                 options = firefoxOptions;
                 break;
 
             case "edge":
-                var edgeoptions = new EdgeOptions();
+                var edgeOptions = new EdgeOptions();
                 if (headless)
                 {
-                    edgeoptions.AddArgument("--headless=new");
-                    edgeoptions.AddArgument("--window-size=1920,1080");
+                    edgeOptions.AddArgument("--headless=new");
                 }
-                edgeoptions.AddArgument("--ignore-certificate-errors");
-                edgeoptions.AddArgument("--allow-insecure-localhost");
-
-                options = edgeoptions;
+                // SENIOR QA TRICK: Apply window size uniformly
+                edgeOptions.AddArgument("--window-size=1920,1080");
+                edgeOptions.AddArgument("--start-maximized");
+                edgeOptions.AddArgument("--ignore-certificate-errors");
+                edgeOptions.AddArgument("--allow-insecure-localhost");
+                options = edgeOptions;
                 break;
 
             case "chrome":
@@ -43,8 +44,11 @@ public static class DriverFactory
                 if (headless)
                 {
                     chromeOptions.AddArgument("--headless=new");
-                    chromeOptions.AddArgument("--window-size=1920,1080");
+                    chromeOptions.AddArgument("--disable-gpu"); // Recommended for headless stability in Linux CI
                 }
+                // Move these OUTSIDE the headless check so local and CI are identical layout-wise
+                chromeOptions.AddArgument("--window-size=1920,1080");
+                chromeOptions.AddArgument("--start-maximized");
                 chromeOptions.AddArgument("--incognito");
                 chromeOptions.AddArgument("--ignore-certificate-errors");
                 chromeOptions.AddArgument("--allow-running-insecure-content");
@@ -52,19 +56,33 @@ public static class DriverFactory
                 break;
         }
 
+        IWebDriver driver;
 
         if (!string.IsNullOrEmpty(gridUrl))
         {
-            return new RemoteWebDriver(new Uri(gridUrl), options.ToCapabilities());
+            driver = new RemoteWebDriver(new Uri(gridUrl), options.ToCapabilities());
+        }
+        else
+        {
+            driver = options switch
+            {
+                EdgeOptions e => new EdgeDriver(e),
+                FirefoxOptions f => new FirefoxDriver(f),
+                _ => new ChromeDriver((ChromeOptions)options)
+            };
         }
 
-        // 3. Return the specific Local Driver
-        return options switch
+        // THE ULTIMATE DEFENSE: Explicitly command the active window context to maximize
+        // This forces headless Linux browsers to expand completely to the given arguments.
+        try
         {
-            EdgeOptions e => new EdgeDriver(e),
-            FirefoxOptions f => new FirefoxDriver(f),
-            _ => new ChromeDriver((ChromeOptions)options)
-        };
-    }
+            driver.Manage().Window.Size = new System.Drawing.Size(1920, 1080);
+        }
+        catch (NotImplementedException)
+        {
+            // Some specific cloud grid configurations don't support direct manipulation APIs
+        }
 
+        return driver;
+    }
 }

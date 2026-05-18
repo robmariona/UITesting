@@ -25,21 +25,21 @@ namespace UITesting.Tests
         [Fact]
         public void FileAclaim()
         {
-            // 1. Arrange
+            // 1. Clean data model
             var claimData = new ClaimModel
             {
                 Description = "Had an accident 2",
             };
 
-            // 2. Act: Navigate to the claim view page 
+            // 2. Act: Navigate via the proper page instance context
             ClaimPage claimFormPage = _claim.ClickFileAClaim();
 
-            // 3. Complete the form submit using the captured page object instance
+            // 3. Complete form submission
             claimFormPage.SubmitClaim(claimData);
 
-            // 4. Assert: Look for the success element using the normalized text validator
+            // 4. Robust wait using normalized text strategy
             By successAlert = By.XPath("//div[contains(normalize-space(.), 'Claim submitted successfully!')]");
-            Driver.WaitAndFind(successAlert, 10);
+            Driver.WaitAndFind(successAlert, 15); // Bumped to 15s to account for Render cold-starts
         }
 
     }

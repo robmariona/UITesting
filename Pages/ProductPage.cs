@@ -51,7 +51,7 @@ namespace UITesting.Pages
 
             foreach (var element in nameElements)
             {
-                string name = element.Text.Trim();
+                string name = (element.Text ?? string.Empty).Trim();
 
                 // If Add returns false, it means the name was already in the set
                 if (!seenNames.Add(name))
