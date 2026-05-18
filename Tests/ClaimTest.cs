@@ -28,7 +28,7 @@ namespace UITesting.Tests
             // 1. Clean data model
             var claimData = new ClaimModel
             {
-                Description = "Had an accident 444",
+                Description = "Had an accident 333333",
             };
 
             // 2. Act: Navigate via the proper page instance context
