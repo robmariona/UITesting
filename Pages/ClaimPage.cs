@@ -17,7 +17,7 @@ namespace UITesting.Pages
 
         }
 
-        private readonly By PolicySelect = By.XPath($"//select[contains(text(),'Select a policy')]");
+        private readonly By PolicySelect = By.XPath("//select[option[contains(text(), 'Select a policy')]]");
         private readonly By ClaimDescription = By.CssSelector("textarea[placeholder*='Please describe the incident in detail...']");
         private readonly By btnSubmitClaim = By.XPath($"//button[contains(text(), 'Submit Claim')]");
 
