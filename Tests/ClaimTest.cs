@@ -27,6 +27,8 @@ namespace UITesting.Tests
             };
             _claim.ClickFileAClaim();
 
+            _claim.SubmitClaim(ClaimtData);
+
         }
 
     }
