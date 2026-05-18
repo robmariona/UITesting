@@ -9,6 +9,8 @@ using UITesting.Pages;
 
 namespace UITesting.Tests
 {
+
+    [Collection("Sequential Tests")]
     public class ClaimTest : TestBase
     {
         private readonly ClaimPage _claim;
@@ -25,7 +27,7 @@ namespace UITesting.Tests
             {
                 Description = "Had an accicdent",
             };
-            _claim.ClickFileAClaim();
+            ClaimPage claimFormPage = _claim.ClickFileAClaim();
 
             _claim.SubmitClaim(ClaimtData);
 
