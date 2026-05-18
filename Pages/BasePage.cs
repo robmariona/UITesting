@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using UITesting.Extensions;
 
 namespace UITesting.Pages
 {
@@ -23,6 +24,7 @@ namespace UITesting.Pages
         protected readonly By ClientLogInLocator = By.CssSelector("a[href*='login']");
        // protected readonly By ClientLogOutLocator = By.XPath($"//button[contains(text(), 'Logout')]");
         protected readonly By DashboardButtonlocator = By.CssSelector("a[href*='dashboard']");
+        protected readonly By FileAclaimLocator = By.CssSelector("a[href*='file-claim']");
 
 
         public IWebElement Navbar => Driver.FindElement(By.CssSelector("div[class*+='justify-between']"));
@@ -30,6 +32,12 @@ namespace UITesting.Pages
 
         public IWebElement ClientLogInButton => Driver.FindElement(ClientLogInLocator);
         //public IWebElement ClientLogOutButton => Driver.FindElement(ClientLogOutLocator);
+
+        public IWebElement FileAclaimButton => Driver.FindElement(FileAclaimLocator);
+
+        public ClaimPage ClickFileAClaim() => (ClaimPage)Driver.WaitAndClick((By)FileAclaimButton, 10);
+
+
 
 
     }
