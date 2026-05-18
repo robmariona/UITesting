@@ -47,7 +47,7 @@ namespace UITesting.Pages
             var nameElements = Driver.FindElements(By.XPath("//table//tr/td[1]"));
 
             var seenNames = new HashSet<string>();
-            string duplicateName = null;
+            string duplicateName = null!;
 
             foreach (var element in nameElements)
             {

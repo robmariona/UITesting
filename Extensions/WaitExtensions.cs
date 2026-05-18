@@ -20,12 +20,31 @@ namespace UITesting.Extensions
             return wait.Until(ExpectedConditions.ElementIsVisible(locator));
         }
 
-        public static IWebElement WaitAndClick(this IWebDriver driver, By locator, int timeoutSeconds = 10)
+        public static void WaitAndClick(this IWebDriver driver, By locator, int timeoutSeconds = 10)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds));
-            var element = wait.Until(ExpectedConditions.ElementToBeClickable(locator));
-            element.Click();
-            return element;
+
+            // Tell the explicit wait to ignore StaleElementReferenceException during its polling cycles
+            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(NoSuchElementException));
+
+            wait.Until(d =>
+            {
+                try
+                {
+                    var element = d.FindElement(locator);
+                    if (element.Displayed && element.Enabled)
+                    {
+                        element.Click();
+                        return true; // The click succeeded!
+                    }
+                    return false;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    // If it went stale during the lookup or click, return false so the loop instantly retries
+                    return false;
+                }
+            });
         }
         public static void WaitAndType(this IWebDriver driver, By locator, string text, bool clearFirst = true)
         {
