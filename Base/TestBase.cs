@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using UITesting.Extensions;
 using UITesting.Pages;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 
 
@@ -32,9 +34,31 @@ namespace UITesting.Base
         protected LoginPage LoginAsValidUser()
         {
             var loginPage = new LoginPage(Driver);
-            return loginPage.ClientLogIn().LoginUser("Rob", "Password33!%"); // 
+            loginPage.ClientLogIn().LoginUser("Rob", "Password33!%");
 
+            // THE ULTIMATE FIX: Explicitly pause until the login state clears
+            var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(Driver, TimeSpan.FromSeconds(10));
 
+            wait.Until(d =>
+            {
+                try
+                {
+                    // 1. Check if the Login link is gone, or if a Logout action appears
+                    // Adjust the text 'Logout' to match exactly what your application displays when logged in
+                    bool isLoggedOutButtonVisible = d.PageSource.Contains("Logout") || d.PageSource.Contains("Logout");
+
+                    // 2. Alternatively, ensure the login input box itself has been destroyed/hidden
+                    bool isLoginFormGone = d.FindElements(By.CssSelector("input[type='password']")).Count == 0;
+
+                    return isLoggedOutButtonVisible || isLoginFormGone;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+            });
+
+            return loginPage;
         }
 
 

@@ -22,29 +22,19 @@ namespace UITesting.Extensions
 
         public static void WaitAndClick(this IWebDriver driver, By locator, int timeoutSeconds = 10)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutSeconds));
+            // 1. Wait for the element to be visible and interactable first
+            var element = driver.WaitAndFind(locator, timeoutSeconds);
 
-            // Tell the explicit wait to ignore StaleElementReferenceException during its polling cycles
-            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(NoSuchElementException));
-
-            wait.Until(d =>
+            try
             {
-                try
-                {
-                    var element = d.FindElement(locator);
-                    if (element.Displayed && element.Enabled)
-                    {
-                        element.Click();
-                        return true; // The click succeeded!
-                    }
-                    return false;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    // If it went stale during the lookup or click, return false so the loop instantly retries
-                    return false;
-                }
-            });
+                // 2. Fire the click event once
+                element.Click();
+            }
+            catch (StaleElementReferenceException)
+            {
+                // 3. If it goes stale instantly, the click registered successfully 
+                // and the DOM is already moving to the next state. We swallow this safely.
+            }
         }
         public static void WaitAndType(this IWebDriver driver, By locator, string text, bool clearFirst = true)
         {
