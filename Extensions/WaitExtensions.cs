@@ -49,22 +49,33 @@ namespace UITesting.Extensions
         // Add this new method right below the others!
         public static void WaitAndSelectByPartialText(this IWebDriver driver, By locator, string partialText, int timeoutSeconds = 10)
         {
-            // 1. Reuse your existing wait logic to find the dropdown
             var element = driver.WaitAndFind(locator, timeoutSeconds);
             var select = new SelectElement(element);
 
-            // 2. Scan the available options to find the first one containing your text fragment
-            var targetOption = select.Options.FirstOrDefault(o => o.Text.Contains(partialText));
+            // SENIOR QA TRICK: Wait up to 5 seconds for the options count to be greater than 1
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            try
+            {
+                wait.Until(d => select.Options.Count > 1);
+            }
+            catch (WebDriverTimeoutException)
+            {
+                // Log or proceed if it's meant to have only 1 option
+            }
+
+            // Scan for the target text (using lowercase match for safety)
+            var targetOption = select.Options.FirstOrDefault(o =>
+                (o.Text ?? "").ToLower().Contains(partialText.ToLower()));
 
             if (targetOption != null)
             {
-                // 3. Select it by its full text matching what we found
                 select.SelectByText(targetOption.Text);
             }
             else
             {
-                // Fail clearly if the option isn't there (great for QA debugging!)
-                throw new NoSuchElementException($"Could not find any option containing text: '{partialText}' in the dropdown.");
+                // This will print out ALL available options in your error log so you can see exactly what's wrong!
+                string availableOptions = string.Join(", ", select.Options.Select(o => $"'{o.Text}'"));
+                throw new NoSuchElementException($"Could not find option containing: '{partialText}'. Available options are: [{availableOptions}]");
             }
         }
         public static void WaitUntilUrlIsStable(this IWebDriver driver, string expectedUrlPart, int timeoutSeconds = 10)
