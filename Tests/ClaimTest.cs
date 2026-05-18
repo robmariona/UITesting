@@ -25,7 +25,7 @@ namespace UITesting.Tests
         {
             var ClaimtData = new ClaimModel
             {
-                Description = "Had an accicdent",
+                Description = "Had an accicdent 2",
             };
             ClaimPage claimFormPage = _claim.ClickFileAClaim();
 
