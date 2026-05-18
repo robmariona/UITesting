@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
 using UITesting.Base;
+using UITesting.Extensions;
 using UITesting.Models;
 using UITesting.Pages;
 
@@ -30,6 +32,10 @@ namespace UITesting.Tests
             ClaimPage claimFormPage = _claim.ClickFileAClaim();
 
             _claim.SubmitClaim(ClaimtData);
+            // Option B: Alternatively, look for a success alert banner if your app has one:
+            By successAlert = By.XPath("//div[contains(text(), 'Claim submitted successfully!')]");
+            Driver.WaitAndFind(successAlert, 10);
+        
 
         }
 
