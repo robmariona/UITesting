@@ -25,18 +25,21 @@ namespace UITesting.Tests
         [Fact]
         public void FileAclaim()
         {
-            var ClaimtData = new ClaimModel
+            // 1. Arrange
+            var claimData = new ClaimModel
             {
-                Description = "Had an accicdent 2",
+                Description = "Had an accident 2",
             };
+
+            // 2. Act: Navigate to the claim view page 
             ClaimPage claimFormPage = _claim.ClickFileAClaim();
 
-            _claim.SubmitClaim(ClaimtData);
-            // Option B: Alternatively, look for a success alert banner if your app has one:
-            By successAlert = By.XPath("//div[contains(text(), 'Claim submitted successfully!')]");
-            Driver.WaitAndFind(successAlert, 10);
-        
+            // 3. Complete the form submit using the captured page object instance
+            claimFormPage.SubmitClaim(claimData);
 
+            // 4. Assert: Look for the success element using the normalized text validator
+            By successAlert = By.XPath("//div[contains(normalize-space(.), 'Claim submitted successfully!')]");
+            Driver.WaitAndFind(successAlert, 10);
         }
 
     }
