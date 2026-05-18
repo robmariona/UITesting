@@ -27,7 +27,7 @@ namespace UITesting.Pages
         protected readonly By FileAclaimLocator = By.CssSelector("a[href*='file-claim']");
 
 
-        public IWebElement Navbar => Driver.FindElement(By.CssSelector("div[class*+='justify-between']"));
+        public IWebElement Navbar => Driver.FindElement(By.CssSelector("div[class*='justify-between']"));
         public IWebElement DashboardButton => Driver.FindElement(DashboardButtonlocator);
 
         public IWebElement ClientLogInButton => Driver.FindElement(ClientLogInLocator);
@@ -35,7 +35,14 @@ namespace UITesting.Pages
 
         public IWebElement FileAclaimButton => Driver.FindElement(FileAclaimLocator);
 
-        public ClaimPage ClickFileAClaim() => (ClaimPage)Driver.WaitAndClick((By)FileAclaimButton, 10);
+        public ClaimPage ClickFileAClaim()
+        {
+            // Pass the By locator directly, do not pass the initialized element
+            Driver.WaitAndClick(FileAclaimLocator, 10);
+
+            // Return a new initialized instance of the destination page
+            return new ClaimPage(Driver);
+        }
 
 
 

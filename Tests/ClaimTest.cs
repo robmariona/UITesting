@@ -21,7 +21,7 @@ namespace UITesting.Tests
         [Fact]
         public void FileAclaim()
         {
-            var ClaimtData = new ProductModel
+            var ClaimtData = new ClaimModel
             {
                 Description = "Had an accicdent",
             };

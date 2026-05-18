@@ -39,6 +39,8 @@ namespace UITesting.Base
 
 
 
+
+
         public void Dispose()
         {
             // Every test will automatically close the browser when finished

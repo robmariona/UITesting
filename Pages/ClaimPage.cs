@@ -24,7 +24,7 @@ namespace UITesting.Pages
         public void FileAClaim_form(ClaimModel claim)
         {
             
-            Driver.WaitAndSelectByPartialText(PolicySelect, "Standar");
+            Driver.WaitAndSelectByPartialText(PolicySelect, "Standard");
             Driver.WaitAndType(ClaimDescription, claim.Description);
         }
 
