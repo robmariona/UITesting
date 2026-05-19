@@ -1,6 +1,18 @@
-name: Selenium Parallel CI
+﻿name: Selenium Parallel CI
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  
+  # This enables the "Run workflow" button in the GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      testFilter:
+        description: 'Test Filter (e.g., Category=Smoke, Category=Regression, or FullyQualifiedName=UITesting.Tests.ClaimTest)'
+        required: false
+        default: 'Category=Smoke' # Fallback default if you just click run without typing anything
 
 jobs:
   test:
@@ -16,5 +28,25 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Run Tests
-        run:  dotnet test -e BROWSER=chrome -e HEADLESS=true  --configuration Release
+      - name: Run Filtered UI Tests via Commit Message Flags
+        run: |
+            # 1. Capture the message from the commit that triggered this workflow run
+            COMMIT_MSG=$(git log -1 --pretty=%B)
+            echo "Processing commit message: $COMMIT_MSG"
+        
+            # 2. Check conditions and assign the correct xUnit filter expression
+            if [[ "$COMMIT_MSG" == *"[run-smoke]"* ]]; then
+              echo "🎯 Match found! Running ONLY Smoke Tests."
+              FILTER_ARG="--filter Category=Smoke"
+          
+            elif [[ "$COMMIT_MSG" == *"[run-regression]"* ]]; then
+              echo "🎯 Match found! Running ONLY Regression Tests."
+              FILTER_ARG="--filter Category=Regression"
+          
+            else
+              echo "🚀 No specific flags detected. Running the ENTIRE test suite!"
+              FILTER_ARG=""
+            fi
+        
+            # 3. Execute the tests using the determined filter argument
+            dotnet test $FILTER_ARG -e BROWSER=chrome -e HEADLESS=true --configuration Release

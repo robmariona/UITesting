@@ -24,6 +24,7 @@ namespace UITesting.Tests
         }
 
         [Fact]
+        [Trait("Category", "Smoke")]
         public void DeleteDuplicates()
         {
 

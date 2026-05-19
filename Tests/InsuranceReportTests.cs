@@ -27,6 +27,7 @@ namespace UITesting.Tests
         }
 
         [Fact]
+        [Trait("Category", "Regression")]
         public void UserCanViewInsuranceReport_ShouldDisplayData()
         {
             

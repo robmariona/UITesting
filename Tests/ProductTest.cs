@@ -22,6 +22,7 @@ namespace UITesting.Tests
         }
 
         [Fact]
+        [Trait("Category", "Regression")]
         public void ProductIsVisible_AfterCreation()
         {
             // 1. Arrange - Group your data into the Model
@@ -51,6 +52,7 @@ namespace UITesting.Tests
         }
 
         [Fact]
+        [Trait("Category", "Smoke")]
         public void ProductIsVisible_AfterUpdate()
         {
 

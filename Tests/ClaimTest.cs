@@ -23,6 +23,7 @@ namespace UITesting.Tests
         }
 
         [Fact]
+        [Trait("Category", "Regression")]
         public void FileAclaim()
         {
             // 1. Clean data model
