@@ -35,13 +35,13 @@ namespace UITesting.Pages
 
         public IWebElement FileAclaimButton => Driver.FindElement(FileAclaimLocator);
 
-        public ClaimPage ClickFileAClaim()
+        public FileAClaimPage ClickFileAClaim()
         {
             // Pass the By locator directly, do not pass the initialized element
             Driver.WaitAndClick(FileAclaimLocator, 10);
 
             // Return a new initialized instance of the destination page
-            return new ClaimPage(Driver);
+            return new FileAClaimPage(Driver);
         }
 
 

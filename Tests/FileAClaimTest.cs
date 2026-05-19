@@ -13,13 +13,13 @@ namespace UITesting.Tests
 {
 
     [Collection("Sequential Tests")]
-    public class ClaimTest : TestBase
+    public class FileAClaimTest : TestBase
     {
-        private readonly ClaimPage _claim;
+        private readonly FileAClaimPage _claim;
 
-        public ClaimTest()
+        public FileAClaimTest()
         {
-            _claim = new ClaimPage(Driver);
+            _claim = new FileAClaimPage(Driver);
         }
 
         [Fact]
@@ -27,13 +27,13 @@ namespace UITesting.Tests
         public void FileAclaim()
         {
             // 1. Clean data model
-            var claimData = new ClaimModel
+            var claimData = new FileAClaimModel
             {
                 Description = "Had an accident 333333",
             };
 
             // 2. Act: Navigate via the proper page instance context
-            ClaimPage claimFormPage = _claim.ClickFileAClaim();
+            FileAClaimPage claimFormPage = _claim.ClickFileAClaim();
 
             // 3. Complete form submission
             claimFormPage.SubmitClaim(claimData);

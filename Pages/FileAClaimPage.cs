@@ -10,9 +10,9 @@ using UITesting.Models;
 
 namespace UITesting.Pages
 {
-    public  class ClaimPage : BasePage
+    public  class FileAClaimPage : BasePage
     {
-        public ClaimPage(IWebDriver driver) : base(driver)
+        public FileAClaimPage(IWebDriver driver) : base(driver)
         {
 
         }
@@ -21,14 +21,14 @@ namespace UITesting.Pages
         private readonly By ClaimDescription = By.CssSelector("textarea[placeholder*='Please describe the incident in detail...']");
         private readonly By btnSubmitClaim = By.XPath($"//button[contains(text(), 'Submit Claim')]");
 
-        public void FileAClaim_form(ClaimModel claim)
+        public void FileAClaim_form(FileAClaimModel claim)
         {
             
             Driver.WaitAndSelectByPartialText(PolicySelect, "Standard");
             Driver.WaitAndType(ClaimDescription, claim.Description);
         }
 
-        public void SubmitClaim(ClaimModel claim)
+        public void SubmitClaim(FileAClaimModel claim)
         {
             FileAClaim_form(claim);
             Driver.WaitAndClick(btnSubmitClaim);
